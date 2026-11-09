@@ -25,9 +25,6 @@
 12. [Testing Suite](#-testing-suite)
 13. [Limitations & Trade-offs](#-limitations--trade-offs)
 14. [Future Enhancements](#-future-enhancements)
-15. [Demonstration Video Script](#-two-minute-demonstration-video-script)
-16. [Resume-Ready Project Description](#-resume-ready-bullet-points)
-17. [Technical Interview Q&A](#-technical-interview-preparation)
 
 ---
 
@@ -281,45 +278,6 @@ python -m unittest tests/test_live_integration.py -v
 * **Document Translation:** Support direct drag-and-drop file translation for `.pdf`, `.docx`, and `.txt`.
 * **Persistent SQLite Database:** Store long-term user translation glossaries.
 * **Batch Translation API:** Parallel batch translation of multiple sentences simultaneously.
-
----
-
-## 🎬 Two-Minute Demonstration Video Script
-
-* **[0:00 - 0:20] Introduction:**  
-  *"Hello everyone! My name is Dhushyanth, and today I'm demonstrating Project 3 for my CodeAlpha Artificial Intelligence Internship: The Neural Language Translation Tool. This application is built with Python, Streamlit, and a resilient API architecture integrating LibreTranslate and MyMemory."*
-* **[0:20 - 0:45] Architecture & Sidebar Configuration:**  
-  *"Looking at the sidebar, notice how the application allows configurable endpoints. We don't hardcode any secrets; the app reads from environment variables or custom user inputs. We can toggle between LibreTranslate—which queries live endpoints to dynamically fetch only genuinely supported languages—and MyMemory as a zero-key fallback."*
-* **[0:45 - 1:15] Core Translation & Language Swap:**  
-  *"Let's demonstrate a live translation. I'll enter: 'Artificial Intelligence is transforming global communication.' I select English as the source—or leave it on Auto Detect—and choose Spanish. Clicking 'Translate Text', the model translates it to 'La inteligencia artificial está transformando la comunicación global' in just a few milliseconds. Clicking the Swap button instantly flips the languages and content. We also have a one-click copy button for quick clipboard export."*
-* **[1:15 - 1:40] Indic Languages & Fallback Engine:**  
-  *"To translate Indic languages like Telugu, Tamil, or Malayalam, we toggle to our MyMemory engine. Translating 'Welcome to CodeAlpha' to Telugu gives us 'కోడ్‌ఆల్ఫాకు స్వాగతం' instantly. Every successful translation is recorded in our session history ledger below, which can be downloaded as a CSV or JSON report."*
-* **[1:40 - 2:00] Testing & Conclusion:**  
-  *"Under the hood, the system is backed by a 10-point automated test suite with full mocking and real integration testing. Thank you for watching my CodeAlpha internship project demonstration!"*
-
----
-
-## 📄 Resume-Ready Bullet Points
-
-* **AI Engineering Intern | CodeAlpha Language Translation Tool**
-  * Developed a modular multilingual translation web application using **Python 3.14**, **Streamlit**, and **Requests**, supporting over 50 languages with sub-second latency.
-  * Architected a dual-engine API strategy integrating **LibreTranslate** (REST/JSON) and a zero-configuration fallback (**MyMemory**), eliminating single-point-of-failure risks.
-  * Implemented dynamic language discovery by querying `/languages` endpoints, preventing unsupported language pair execution and eliminating hardcoded model catalogs.
-  * Built resilient exception handling covering HTTP 400, 401/403 auth errors, 429 rate limits, and network connection timeouts.
-  * Created a comprehensive automated testing suite with **Unittest** and **Pytest** using `unittest.mock` to achieve 100% test coverage across 10 critical failure modes.
-
----
-
-## ❓ Technical Interview Preparation
-
-### Q1: Why did you choose LibreTranslate and how does it compare to proprietary APIs like Google Translate?
-> **Answer:** LibreTranslate is completely free, open-source, and self-hostable powered by the Argos Translate neural machine translation engine. Unlike proprietary APIs that enforce strict billing paywalls, proprietary tracking, and recurring vendor lock-in, LibreTranslate allows developers and privacy-sensitive enterprises to run translations completely on-premises via Docker.
-
-### Q2: How did you handle network timeouts and API rate limiting?
-> **Answer:** We wrapped HTTP operations in granular exception blocks catching `requests.exceptions.Timeout` and `requests.exceptions.ConnectionError`. Furthermore, we inspect HTTP status codes: a 429 indicates rate limiting, prompting the user with backoff advice; a 400/401 indicates authentication requirements. We also decoupled the API call with a user-configurable timeout parameter, preventing the Streamlit worker from hanging indefinitely.
-
-### Q3: Why is mocking crucial in your automated test suite?
-> **Answer:** Unit tests should be fast, deterministic, and runnable without an internet connection. If tests depended on live external translation APIs, they would be vulnerable to rate limits, server maintenance, latency spikes, and network drops. By using `unittest.mock.patch`, we mock the HTTP responses to simulate 200 OK, 400 Bad Request, timeout exceptions, and malformed JSON payloads in under 10 milliseconds.
 
 ---
 
